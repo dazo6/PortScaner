@@ -29,7 +29,7 @@ public class Main {
         timeout = timeoutIn;
 
         final List<Future<ScanResult>> futures = new ArrayList<>();
-        final ExecutorService es = Executors.newFixedThreadPool(10);
+        final ExecutorService es = Executors.newFixedThreadPool(50);
         int[] ports = getPorts(this.ports);
 
         if (null != ports) {
@@ -48,8 +48,8 @@ public class Main {
         es.shutdown();
         for (final Future<ScanResult> f : futures) {
             try {
-                if (!f.get().isOpen()) {
-                    System.out.println(f.get().getPort() + " is closed.");
+                if (f.get().isOpen()) {
+                    System.out.println(f.get().getPort() + " is opend.");
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
